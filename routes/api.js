@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Poll = require('../models/poll');
+var User = require('../models/user');
 
+// ============================
+// Poll API
 router.get('/api/getall', function(req, res){
     Poll.find({}, 'pollId pollName', function(err, results){
         if(err) return console.log(err);
@@ -56,6 +59,11 @@ router.post('/api/deletepoll', function(req, res){
     })
 });
 
-
+router.post('/api/getUser', function(req, res){
+    User.findOne({'twitter.displayName': req.body.user}, function(err, results){
+        if(err) return console.log(err);
+        res.json(results);
+    })
+})
 
 module.exports = router;

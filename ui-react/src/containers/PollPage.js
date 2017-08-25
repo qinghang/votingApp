@@ -41,6 +41,7 @@ class PollPage extends React.Component {
     .then((responseJson) => {
       if(!responseJson) {
         alert('Poll is not found.');
+        this.props.history.push('/polls/');
         return;
       }
       this.setState({poll: responseJson})
