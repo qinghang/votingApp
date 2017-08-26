@@ -1,5 +1,5 @@
 import React from 'react';
-const queryString = require('query-string');
+var crypto = require('crypto');
 
 class AuthUser extends React.Component{
     constructor(props){
@@ -7,7 +7,9 @@ class AuthUser extends React.Component{
     }
 
     componentDidMount(){
-        var user = queryString.parse(this.props.location.search).login;
+        var id = this.props.match.params.id;
+        var user = decrypt(id);
+
         fetch('/api/getUser', {
             method: 'POST',
             headers: {
@@ -22,10 +24,11 @@ class AuthUser extends React.Component{
             .then((responseJson) => {
             if(!responseJson) {
                 alert('User is not found.');
-                return;
+                this.props.history.push('/polls/');
+            }else{
+                this.props.login(user);
+                this.props.history.push('/polls/');
             }
-            this.props.login(user);
-            this.props.history.push('/polls/');
         });
     }
 
@@ -34,6 +37,13 @@ class AuthUser extends React.Component{
             <div></div>
         );
     }
+}
+
+function decrypt(str){
+  var decipher = crypto.createDecipher('aes-256-ctr', "FCCBackendProject#6");
+  var dec = decipher.update(str,'hex','utf8');
+  dec += decipher.final('utf8');
+  return dec;
 }
 
 export default AuthUser;
