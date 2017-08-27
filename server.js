@@ -19,6 +19,7 @@ app.use(passport.session());
 require('./routes/auth.js')(app, passport);
 
 app.set('port', (process.env.PORT || 3001));
+app.enable('trust proxy');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

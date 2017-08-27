@@ -11,7 +11,7 @@ class NewPoll extends React.Component {
   handleSubmit(e){
     var _self = this;
     var pollId = (new Date().valueOf()).toString();
-    var creater = 'qinghang';
+    var creater = this.props.status.user;
     var pollData = {
       pollId: pollId,
       pollName: this.input.value,

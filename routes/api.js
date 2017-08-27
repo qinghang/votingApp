@@ -15,6 +15,8 @@ router.get('/api/getall', function(req, res){
 router.post('/api/getpoll', function(req, res){
     Poll.findOne({pollId: req.body.pollId}, function(err, results){
         if(err) return console.log(err);
+        results = JSON.parse(JSON.stringify(results));
+        results['visitor'] = req.ip;
         res.json(results);
     })
 });
@@ -41,9 +43,9 @@ router.post('/api/updatepoll', function(req, res){
     if(index >= 0){
         var setter = {};
         setter['vote.'+index+'.num'] = updateInfo.num;
-        opt = {$set: setter};
+        opt = {$set: setter, $push:{voter: updateInfo.voter}};
     }else{
-        opt = {$push: {vote: {opt:updateInfo.voteOpt, num:updateInfo.num}}};
+        opt = {$push: {vote: {opt:updateInfo.voteOpt, num:updateInfo.num}, voter: updateInfo.voter}};
     }
 
     Poll.update({pollId: updateInfo.pollId}, opt, function(err, results){

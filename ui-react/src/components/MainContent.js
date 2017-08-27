@@ -12,7 +12,9 @@ const MainContent = ({status, login}) => {
         <Switch>
           <Route exact path='/polls' component={HomePage} />
           <Redirect exact from='/' to='/polls'/>
-          <Route path='/polls/:pollId' component={PollPage} />
+          <Route path='/polls/:pollId' render={props => (
+            <PollPage {...props} status={status} />
+          )} />
           <PrivateRoute path="/newpoll" component={NewPoll} status={status}/>
           <PrivateRoute path="/mypolls" component={MyPolls} status={status}/>
           <Route path='/authuser/:id' render={props => (
@@ -26,7 +28,7 @@ const MainContent = ({status, login}) => {
 const PrivateRoute = ({ status, component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     status.login ? (
-      <Component {...props}/>
+      <Component {...props} status={status}/>
     ) : (
       <Redirect to={{
         pathname: '/polls',

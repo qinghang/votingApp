@@ -10,12 +10,7 @@ var pollSchema = new Schema({
             num: Number
         }
     ],
-    voter: [
-        {
-            name: String,
-            opt: String
-        }
-    ],
+    voter: Array,
     creater: String
 });
 

@@ -76,30 +76,39 @@ class PollPage extends React.Component {
 
   handleSubmit(e){
     var voteOpt = this.state.optVal === 'custom'? this.input.value : this.state.optVal;
-    alert('You have voted for: ' + voteOpt);
     var pollId = this.props.match.params.pollId;
     var voteIndex = this.state.poll.vote.findIndex(p => p.opt === voteOpt);
     var num = voteIndex >= 0? this.state.poll.vote[voteIndex].num + 1 : 1;
-  
-    var pollData = {
-      pollId: pollId,
-      voteIndex: voteIndex,
-      num: num,
-      voteOpt: voteOpt
-    }
-    fetch('/api/updatepoll', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        pollData: pollData
+    var visitor = this.state.poll.visitor;
+    var isVoted = this.state.poll.voter.indexOf(visitor) >= 0 ? true : false;
+
+    if(!isVoted){
+      var pollData = {
+        pollId: pollId,
+        voteIndex: voteIndex,
+        num: num,
+        voteOpt: voteOpt,
+        voter: visitor
+      }
+      fetch('/api/updatepoll', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pollData: pollData
+        })
       })
-    })
-    .then(function(){
-      window.location.reload();
-    });
+      .then(function(){
+        alert('You have voted for: ' + voteOpt);
+        window.location.reload();
+      });
+    }else{
+      alert('You can only vote once.');
+      this.setState({optVal: 'select'});
+    }
+
     e.preventDefault();
   }
 
@@ -123,7 +132,9 @@ class PollPage extends React.Component {
             <FormControl componentClass="select" placeholder="select" style={{width: '30%',margin:'0 auto'}} value={this.state.optVal} onChange={this.handleChange}>
               <option value="select">select</option>
               {listOpts}
-              <option value="custom">I'd like a custom option</option>
+              {this.props.status.login &&
+                <option value="custom">I'd like a custom option</option>
+              }
             </FormControl>
           </FormGroup>
           {this.state.optVal === 'custom' &&
@@ -139,7 +150,9 @@ class PollPage extends React.Component {
           <Button type="submit">Submit</Button>
         </form>
         <br/>
-        <Button bsStyle="danger" onClick={this.handleRemove}>Remove this Poll</Button>
+        {this.props.status.login && this.props.status.user === this.state.poll.creater &&
+          <Button bsStyle="danger" onClick={this.handleRemove}>Remove this Poll</Button>
+        }
       </Jumbotron>
     );
   }
