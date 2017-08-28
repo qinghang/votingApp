@@ -119,12 +119,29 @@ class PollPage extends React.Component {
     );
     const chart_data = { labels: Helper.getOpt(stat, 'opt'),
                          datasets: [{label: 'Number of Votes', data: Helper.getNum(stat, this.state.optVal)}]};
-    const chart_opt = {scales: {yAxes:[{ticks:{beginAtZero: true}}]}};
+    const chart_opt = {
+      scales: {
+        yAxes:[
+          {
+            ticks: {
+              min: 0,
+              stepSize: 1
+            }
+          }
+        ]
+      },
+      maintainAspectRatio:false
+    }
+
+    const twitter_url = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(window.location.href);
 
     return (
       <Jumbotron style={{ textAlign: 'center'}}>
+        <Button href={twitter_url} style={{ marginLeft: '80%'}}>Share on Twitter</Button>
         <h3>{this.state.poll.pollName}</h3>
-        <Bar data={chart_data} options={chart_opt}/>
+        <div style={{ width: '60%', margin: '0 auto'}}>
+          <Bar data={chart_data} options={chart_opt} />
+        </div>
 
         <form onSubmit={this.handleSubmit}>
           <FormGroup>

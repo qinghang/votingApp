@@ -2,9 +2,6 @@ import React from 'react';
 var crypto = require('crypto');
 
 class AuthUser extends React.Component{
-    constructor(props){
-        super(props);
-    }
 
     componentDidMount(){
         var id = this.props.match.params.id;
@@ -23,7 +20,7 @@ class AuthUser extends React.Component{
             .then((response) => response.json())
             .then((responseJson) => {
             if(!responseJson) {
-                alert('User is not found.');
+                console.log('User is not found.');
                 this.props.history.push('/polls/');
             }else{
                 this.props.login(user);
