@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var path = require('path');
 
 app.set('port', (process.env.PORT || 3001));
 app.enable('trust proxy');
