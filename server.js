@@ -4,11 +4,12 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var path = require('path');
 
 app.set('port', (process.env.PORT || 3001));
 app.enable('trust proxy');
 //serve the react app files
-app.use(express.static('ui-react/build'));
+app.use(express.static(path.resolve(__dirname, './ui-react/build')));
 
 mongoose.connect(process.env.MONGOLAB_URI, {useMongoClient: true});
 
@@ -28,7 +29,7 @@ app.use(require('./routes/api.js'));
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response){
-    response.sendFile('ui-react/build/index.html');
+    response.sendFile(path.resolve(__dirname, './ui-react/build', 'index.html'));
 });
 
 app.listen(app.get('port'), function() {
