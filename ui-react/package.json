@@ -18,5 +18,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://fccb-votingapp.herokuapp.com:3001"
+  "proxy": "https://fccb-votingapp.herokuapp.com"
 }
