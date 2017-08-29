@@ -8,7 +8,7 @@ var session = require('express-session');
 mongoose.connect(process.env.MONGOLAB_URI, {useMongoClient: true});
 
 //serve the react app files
-//app.use(express.static(`${__dirname}/ui-react/build`));
+app.use(express.static(`${__dirname}/ui-react/build`));
 
 require('./config/passport')(passport); //pass passport for configuration
 //required for passport

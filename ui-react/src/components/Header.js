@@ -12,7 +12,7 @@ const Header = (props) => (
     </Navbar.Header>
     {!props.status.login &&
       <Nav pullRight>
-        <NavItem href="https://fccb-votingapp.herokuapp.com:3001/auth/twitter">Login with Twitter</NavItem>
+        <NavItem href="https://fccb-votingapp.herokuapp.com/auth/twitter">Login with Twitter</NavItem>
       </Nav>
     }
     {props.status.login &&
