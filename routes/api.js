@@ -15,9 +15,13 @@ router.get('/api/getall', function(req, res){
 router.post('/api/getpoll', function(req, res){
     Poll.findOne({pollId: req.body.pollId}, function(err, results){
         if(err) return console.log(err);
-        results = JSON.parse(JSON.stringify(results));
-        results['visitor'] = req.ip;
-        res.json(results);
+        if(results){
+            results = JSON.parse(JSON.stringify(results));
+            results['visitor'] = req.ip;
+            res.json(results);
+        }else{
+            res.json(results);
+        }
     })
 });
 

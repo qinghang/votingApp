@@ -24,7 +24,7 @@ class AuthUser extends React.Component{
                 this.props.history.push('/polls/');
             }else{
                 this.props.login(user);
-                this.props.history.push('/polls/');
+                this.props.history.push(sessionStorage.getItem('location'));
             }
         });
     }
