@@ -16,7 +16,7 @@ module.exports = function (app, passport){
     
     app.get('/profile', function(req, res){
         var user = req.user.twitter.displayName;
-        res.redirect('http://localhost:3000/authuser/'+encrypt(user));
+        res.redirect('https://fccb-votingapp.herokuapp.com/authuser/'+encrypt(user));
     });
 }
 

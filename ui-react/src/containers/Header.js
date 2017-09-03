@@ -13,7 +13,7 @@ class Header extends React.Component {
   handleClick(e){
     e.preventDefault();
     sessionStorage.setItem('location', window.location.pathname);
-    window.location.href = "http://localhost:3001/auth/twitter";
+    window.location.href = "https://fccb-votingapp.herokuapp.com/auth/twitter";
   }
 
   render(){
