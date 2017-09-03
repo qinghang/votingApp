@@ -1,14 +1,15 @@
 import React from 'react';
 import Header from './Header';
-import MainContent from './MainContent';
+import MainContent from '../components/MainContent';
 
 class App extends React.Component {
     constructor(props){
         super(props);
-
+        const user = sessionStorage.getItem('user') || 'unknown';
+        const login = user === 'unknown'? false : true;
         this.state = {
-            login: false,
-            user: 'unknown'
+            login: login,
+            user: user
         }
 
         this.login = this.login.bind(this);
@@ -20,6 +21,7 @@ class App extends React.Component {
             login: true,
             user: user
         });
+        sessionStorage.setItem('user', user);
     }
 
     signout(){
@@ -27,6 +29,7 @@ class App extends React.Component {
             login: false,
             user: 'unknown'
         });
+        sessionStorage.removeItem('user');
     }
 
     render(){

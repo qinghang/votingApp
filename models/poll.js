@@ -11,7 +11,8 @@ var pollSchema = new Schema({
         }
     ],
     voter: Array,
-    creater: String
+    creater: String,
+    visitor: String
 });
 
 var Poll = mongoose.model('Poll', pollSchema);
